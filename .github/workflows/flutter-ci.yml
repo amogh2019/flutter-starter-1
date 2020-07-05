@@ -27,27 +27,29 @@ jobs:
         channel: 'beta' # Currently you have to use beta channel for Flutter web.  # 'dev', 'alpha', default to: 'stable'
         
     # doing flutter commands
-    - name: Upgrades flutter
+    - name: Upgrade CIs copy of flutter
       run: flutter upgrade
       working-directory: ./dummy_flutter_app_1
 
-    - name: Enable Web
+    - name: Enable Web in flutter
       run: flutter config --enable-web
       working-directory: ./dummy_flutter_app_1
       
       
-    - name: Install dependencies
+    - name: Install dependencies for this project
       run: flutter packages get
       working-directory: ./dummy_flutter_app_1
       
-    - name: Build Web
+    - name: Build Web release for this package
       run: flutter build web
       working-directory: ./dummy_flutter_app_1
       
-    - name: Deploy
+    - name: Deploy the built artifacts to gh-pages branch
       run: |
         cd ./dummy_flutter_app_1/web
         git init
+        git config user.name  "my-flutter-ci"
+        git config user.email "my-flutter-ci@github.com"
         git remote add secure-origin https://${{ secrets.ACCESS_TOKEN }}@github.com/amogh2019/flutter-starter-1.git
         git checkout -b gh-pages
         git add .
