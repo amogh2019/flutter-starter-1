@@ -15,13 +15,17 @@ jobs:
   
     # Setup Java environment
     - uses: actions/checkout@v1
+      name: Installing checkout actions
+      
     - uses: actions/setup-java@v1
+      name: Installing java
       with:
         java-version: '12.x'
         
         
     # Setup the flutter environment.
     - uses: subosito/flutter-action@v1
+      name: Installing flutter
       with:
         flutter-version: '1.12.x' # you can use 1.12
         channel: 'beta' # Currently you have to use beta channel for Flutter web.  # 'dev', 'alpha', default to: 'stable'
@@ -46,7 +50,7 @@ jobs:
       
     - name: Deploy the built artifacts to gh-pages branch
       run: |
-        cd ./dummy_flutter_app_1/web
+        cd ./dummy_flutter_app_1/build/web
         git init
         git config user.name  "my-flutter-ci"
         git config user.email "my-flutter-ci@github.com"
